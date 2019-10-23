@@ -8,10 +8,15 @@ MPI_Comm getTorusComm(const MPI_Comm old, int height, int width) {
     MPI_Comm_size(old, &oldsize);
 
     int dims[] = { height, width };
-    int flag = MPI_Dims_create(oldsize, 2, dims);
-
-    if (flag != 0)
+    int mul = 1;
+    if (height > 0)
+        mul *= height;
+    if (width > 0)
+        mul *= width;
+    if (oldsize % mul != 0)
         return MPI_COMM_NULL;
+
+    MPI_Dims_create(oldsize, 2, dims);
 
     MPI_Comm torus_comm;
     int periods[] = {1, 1};
