@@ -10,16 +10,18 @@ TEST(Grid_Torus_Topology, can_create_topology) {
     int r;
     MPI_Comm_rank(MPI_COMM_WORLD, &r);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_TRUE(testTorusTopology(torus_comm));
+    }
 }
 
 TEST(Grid_Torus_Topology, not_cart_comm_has_no_torus_topology) {
     int r;
     MPI_Comm_rank(MPI_COMM_WORLD, &r);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_FALSE(testTorusTopology(MPI_COMM_WORLD));
+    }
 }
 
 TEST(Grid_Torus_Topology, non_periodic_comm_has_no_torus_topology) {
@@ -36,8 +38,9 @@ TEST(Grid_Torus_Topology, non_periodic_comm_has_no_torus_topology) {
     MPI_Dims_create(size, 2, dims);
     MPI_Cart_create(MPI_COMM_WORLD, 2, dims, periods, 1, &my_comm);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_FALSE(testTorusTopology(my_comm));
+    }
 }
 
 TEST(Grid_Torus_Topology, not_2_dims_comm_has_no_torus_topology) {
@@ -54,8 +57,9 @@ TEST(Grid_Torus_Topology, not_2_dims_comm_has_no_torus_topology) {
     MPI_Dims_create(size, 3, dims);
     MPI_Cart_create(MPI_COMM_WORLD, 3, dims, periods, 1, &my_comm);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_FALSE(testTorusTopology(my_comm));
+    }
 }
 
 TEST(Grid_Torus_Topology, can_create_with_specified_size) {
@@ -64,8 +68,9 @@ TEST(Grid_Torus_Topology, can_create_with_specified_size) {
     int r;
     MPI_Comm_rank(MPI_COMM_WORLD, &r);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_TRUE(testTorusTopology(torus_comm));
+    }
 }
 
 TEST(Grid_Torus_Topology, cant_create_with_wrong_size) {
@@ -76,8 +81,9 @@ TEST(Grid_Torus_Topology, cant_create_with_wrong_size) {
 
     MPI_Comm my_comm = getTorusComm(MPI_COMM_WORLD, size + 1);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_EQ(my_comm, MPI_COMM_NULL);
+    }
 }
 
 TEST(Grid_Torus_Topology, shift_works_correctly) {
@@ -88,8 +94,9 @@ TEST(Grid_Torus_Topology, shift_works_correctly) {
 
     bool f = testCommunications(torus_comm);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_TRUE(f);
+    }
 }
 
 TEST(Grid_Torus_Topology, shift_dont_works_on_incorrect_comm) {
@@ -102,14 +109,15 @@ TEST(Grid_Torus_Topology, shift_dont_works_on_incorrect_comm) {
     int periods[] = { 1, 0 };
     MPI_Dims_create(size, 2, dims);
     MPI_Cart_create(MPI_COMM_WORLD, 2, dims, periods, 1, &my_comm);
-    
+
     int r;
     MPI_Comm_rank(my_comm, &r);
 
     bool f = testCommunications(my_comm);
 
-    if (r == 0)
+    if (r == 0) {
         ASSERT_FALSE(f);
+    }
 }
 
 int main(int argc, char** argv) {

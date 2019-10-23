@@ -1,7 +1,6 @@
 // Copyright 2019 Savkin Yuriy
-
-#include <stdexcept>
 #include <mpi.h>
+#include <stdexcept>
 #include "../../../modules/task_2/savkin_y_grid-torus_topology/grid-torus_topology.h"
 
 MPI_Comm getTorusComm(const MPI_Comm old, int height, int width) {
@@ -54,7 +53,7 @@ bool testCommunications(const MPI_Comm t_comm) {
     MPI_Cart_shift(t_comm, 0, 1, &back, &front);
     if ((back == MPI_PROC_NULL) || (front == MPI_PROC_NULL))
        flag = 1;
-    
+
     MPI_Cart_shift(t_comm, 1, 1, &back, &front);
     if ((back == MPI_PROC_NULL) || (front == MPI_PROC_NULL))
         flag = 1;
