@@ -37,7 +37,7 @@ std::vector<double> conjugateGradientMethod(double** a, const double* b, int siz
 
     std::function<double(const std::vector<double>&, const std::vector<double>&)> vector_mul =
     [](const std::vector<double>& a, const std::vector<double>& b)->double {
-        double result = 0.0, all;
+        double result = 0.0;
         for (size_t i = 0; i < a.size(); ++i)
             result += a[i] * b[i];
         return result;
