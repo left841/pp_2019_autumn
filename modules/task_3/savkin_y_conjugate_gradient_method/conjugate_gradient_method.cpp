@@ -118,7 +118,8 @@ std::vector<double> conjugateGradientMethod(double** a, const double* b, int siz
         for (int j = 0; j < rows; ++j) {
             z[j] = t2 * z[j] + r[j];
         }
-        MPI_Allgatherv(z.data(), rows, MPI_DOUBLE, z_all.data(), counts.data(), displs.data(), MPI_DOUBLE, MPI_COMM_WORLD);
+        MPI_Allgatherv(z.data(), rows, MPI_DOUBLE,
+            z_all.data(), counts.data(), displs.data(), MPI_DOUBLE, MPI_COMM_WORLD);
     }
 
     delete[] m[0];
@@ -128,7 +129,8 @@ std::vector<double> conjugateGradientMethod(double** a, const double* b, int siz
 
     if (comm_rank == 0) {
         ans.resize(size);
-        MPI_Gatherv(x.data(), rows, MPI_DOUBLE, ans.data(), counts.data(), displs.data(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
+        MPI_Gatherv(x.data(), rows, MPI_DOUBLE,
+            ans.data(), counts.data(), displs.data(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
     } else {
         MPI_Gatherv(x.data(), rows, MPI_DOUBLE, nullptr, nullptr, nullptr, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
@@ -145,7 +147,8 @@ std::vector<double> conjugateGradientMethodOneProc(double** a, const double* b, 
         return result;
     };
 
-    std::function<void(double**, const std::vector<double>&, std::vector<double>*)> mat_vec_mul = [size](double** a, const std::vector<double>& b, std::vector<double>* r)->void {
+    std::function<void(double**, const std::vector<double>&, std::vector<double>*)> mat_vec_mul =
+    [size](double** a, const std::vector<double>& b, std::vector<double>* r)->void {
         for (int i = 0; i < size; ++i) {
             (*r)[i] = 0.0;
             for (size_t j = 0; j < b.size(); ++j) {
