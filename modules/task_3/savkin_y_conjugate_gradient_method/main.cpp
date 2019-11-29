@@ -45,7 +45,7 @@ TEST(Conjugate_Gradient_Method, simple_matrix) {
         delete[] a;
         delete[] b;
 
-        for (int i = 0; i < x.size(); ++i)
+        for (size_t i = 0; i < x.size(); ++i)
             ASSERT_NEAR(x[i], w[i], 0.000001);
     }
 }
@@ -72,7 +72,7 @@ TEST(Conjugate_Gradient_Method, big_numbers_test) {
         delete[] a;
         delete[] b;
 
-        for (int i = 0; i < x.size(); ++i)
+        for (size_t i = 0; i < x.size(); ++i)
             ASSERT_NEAR(x[i], w[i], 0.002);
     }
 }
@@ -99,7 +99,7 @@ TEST(Conjugate_Gradient_Method, big_size_test) {
         delete[] a;
         delete[] b;
 
-        for (int i = 0; i < x.size(); ++i)
+        for (size_t i = 0; i < x.size(); ++i)
             ASSERT_NEAR(x[i], w[i], 1);
     }
 }
@@ -126,7 +126,7 @@ TEST(Conjugate_Gradient_Method, big_size_and_numbers_test) {
         delete[] a;
         delete[] b;
 
-        for (int i = 0; i < x.size(); ++i)
+        for (size_t i = 0; i < x.size(); ++i)
             ASSERT_NEAR(x[i], w[i], 1);
     }
 }
