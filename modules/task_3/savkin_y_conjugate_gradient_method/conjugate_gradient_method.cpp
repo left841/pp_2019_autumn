@@ -1,17 +1,16 @@
 // Copyright 2019 Savkin Yuriy
 #include <mpi.h>
-#include <ctime>
 #include <vector>
 #include <functional>
 #include <random>
 #include "../../../modules/task_3/savkin_y_conjugate_gradient_method/conjugate_gradient_method.h"
 
-double** getRandomMatrix(int size, double miv, double mav) {
+double** getRandomMatrix(int size, double miv, double mav, unsigned seed) {
     double** a = new double*[size];
     a[0] = new double[size * size];
     for (int i = 1; i < size; ++i)
         a[i] = a[i - 1] + size;
-    std::mt19937 mt(time(0));
+    std::mt19937 mt(seed);
     std::uniform_real_distribution<double> urd(miv, mav);
     for (int i = 0; i < size; ++i)
         for (int j = i; j < size; ++j)
@@ -19,9 +18,9 @@ double** getRandomMatrix(int size, double miv, double mav) {
     return a;
 }
 
-double* getRandomVector(int size, double miv, double mav) {
+double* getRandomVector(int size, double miv, double mav, unsigned seed) {
     double* a = new double[size];
-    std::mt19937 mt(time(0));
+    std::mt19937 mt(seed);
     std::uniform_real_distribution<double> urd(miv, mav);
     for (int i = 0; i < size; ++i)
         a[i] = urd(mt);

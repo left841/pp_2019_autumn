@@ -5,9 +5,9 @@
 #include <mpi.h>
 #include <vector>
 
-double** getRandomMatrix(int size, double miv, double mav);
+double** getRandomMatrix(int size, double miv, double mav, unsigned seed);
 
-double* getRandomVector(int size, double miv, double mav);
+double* getRandomVector(int size, double miv, double mav, unsigned seed);
 
 std::vector<double> conjugateGradientMethod(double** a, const double* b, int size);
 

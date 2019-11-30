@@ -59,8 +59,8 @@ TEST(Conjugate_Gradient_Method, big_numbers_test) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     if (rank == 0) {
-        a = getRandomMatrix(size, 1, 50);
-        b = getRandomVector(size, 1, 50);
+        a = getRandomMatrix(size, 0, 50, 23);
+        b = getRandomVector(size, 0, 50, 24);
     }
 
     x = conjugateGradientMethod(a, b, size);
@@ -73,7 +73,7 @@ TEST(Conjugate_Gradient_Method, big_numbers_test) {
         delete[] b;
 
         for (size_t i = 0; i < x.size(); ++i)
-            ASSERT_NEAR(x[i], w[i], 0.002);
+            ASSERT_NEAR(x[i], w[i], 0.001);
     }
 }
 
@@ -86,8 +86,8 @@ TEST(Conjugate_Gradient_Method, big_size_test) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     if (rank == 0) {
-        a = getRandomMatrix(size, 0, 10);
-        b = getRandomVector(size, 0, 10);
+        a = getRandomMatrix(size, 0, 10, 51);
+        b = getRandomVector(size, 0, 10, 66);
     }
 
     x = conjugateGradientMethod(a, b, size);
@@ -100,7 +100,7 @@ TEST(Conjugate_Gradient_Method, big_size_test) {
         delete[] b;
 
         for (size_t i = 0; i < x.size(); ++i)
-            ASSERT_NEAR(x[i], w[i], 1);
+            ASSERT_NEAR(x[i], w[i], 0.05);
     }
 }
 
@@ -113,8 +113,8 @@ TEST(Conjugate_Gradient_Method, big_size_and_numbers_test) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     if (rank == 0) {
-        a = getRandomMatrix(size, 0, 40);
-        b = getRandomVector(size, 0, 40);
+        a = getRandomMatrix(size, 0, 50, 92);
+        b = getRandomVector(size, 0, 50, 55);
     }
 
     x = conjugateGradientMethod(a, b, size);
@@ -127,7 +127,7 @@ TEST(Conjugate_Gradient_Method, big_size_and_numbers_test) {
         delete[] b;
 
         for (size_t i = 0; i < x.size(); ++i)
-            ASSERT_NEAR(x[i], w[i], 1);
+            ASSERT_NEAR(x[i], w[i], 0.05);
     }
 }
 
