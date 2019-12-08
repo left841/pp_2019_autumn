@@ -114,9 +114,87 @@ TEST(Grid_Torus_Topology, shift_dont_works_on_incorrect_comm) {
     MPI_Comm_rank(my_comm, &r);
 
     bool f = testCommunications(my_comm);
-
+    
     if (r == 0) {
         ASSERT_FALSE(f);
+    }
+}
+
+TEST(Grid_Torus_Topology, simple_task) {
+    MPI_Comm torus_comm = getTorusComm(MPI_COMM_WORLD);
+    int rank, size, sz = 10000000;
+    MPI_Comm_rank(torus_comm, &rank);
+    MPI_Comm_size(torus_comm, &size);
+    int coords[2];
+    MPI_Cart_coords(torus_comm, rank, 2, coords);
+
+    std::vector<int> v(sz, rank);
+    std::vector<int> w(sz);
+
+    MPI_Request mr, mr2;
+    for (int i = 0; i < 2; ++i) {
+        int dst, src;
+        MPI_Cart_shift(torus_comm, i, 1, &src, &dst);
+        MPI_Isend(v.data(), sz, MPI_INT, dst, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, src, src, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == src);
+        MPI_Isend(v.data(), sz, MPI_INT, src, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, dst, dst, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == dst);
+
+        MPI_Cart_shift(torus_comm, i, 1, &src, &dst);
+        MPI_Isend(v.data(), sz, MPI_INT, dst, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, src, src, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == src);
+        MPI_Isend(v.data(), sz, MPI_INT, src, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, dst, dst, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == dst);
+
+        MPI_Cart_shift(torus_comm, i, 1, &src, &dst);
+        MPI_Isend(v.data(), sz, MPI_INT, dst, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, src, src, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == src);
+        MPI_Isend(v.data(), sz, MPI_INT, src, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, dst, dst, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == dst);
+
+        MPI_Cart_shift(torus_comm, i, 1, &src, &dst);
+        MPI_Isend(v.data(), sz, MPI_INT, dst, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, src, src, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == src);
+        MPI_Isend(v.data(), sz, MPI_INT, src, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, dst, dst, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == dst);
+
+        MPI_Cart_shift(torus_comm, i, 1, &src, &dst);
+        MPI_Isend(v.data(), sz, MPI_INT, dst, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, src, src, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == src);
+        MPI_Isend(v.data(), sz, MPI_INT, src, rank, torus_comm, &mr);
+        MPI_Irecv(w.data(), sz, MPI_INT, dst, dst, torus_comm, &mr2);
+        MPI_Wait(&mr, MPI_STATUS_IGNORE);
+        MPI_Wait(&mr2, MPI_STATUS_IGNORE);
+        ASSERT_TRUE(w[0] == dst);
+
+
     }
 }
 
